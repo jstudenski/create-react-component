@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jstudenski/react-redux-comp-gen#readme",
   "dependencies": {
+    "inquirer": "^6.0.0",
     "write": "^1.0.3"
   }
 }
