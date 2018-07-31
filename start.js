@@ -20,10 +20,15 @@ inquirer.prompt([
   console.log(low);
   console.log(up);
 
-  // fs.readFile('template/hello.sass', function (err, data) {
-  //   if (err) throw err;
-  //   console.log(data);
-  // });
+  sass = sass.replace("%name%", low);
+  main = main.replace("%name%", low);
+  main = main.replace("%name%", low);
+  main = main.replace("%name%", low);
+  main = main.replace("%Name%", up);
+  main = main.replace("%Name%", up);
+
+
+  // console.log(res);
 
   writeFile('output/'+up+'/'+up+'.js', main, function(err) {
     if (err) console.log(err);
@@ -33,14 +38,6 @@ inquirer.prompt([
     if (err) console.log(err);
   });
 
-  // writeFile('test/' + name +'.sass', index, function(err) {
-  //   if (err) console.log(err);
-  // });
 
 
 });
-
-// let index = "/n mport Sidebar from \'./Sidebar\'\; /n export default Sidebar\;"
-
-
-
