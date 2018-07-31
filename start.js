@@ -26,6 +26,9 @@ inquirer.prompt([
   main = main.replace("%name%", low);
   main = main.replace("%Name%", up);
   main = main.replace("%Name%", up);
+  main = main.replace("%Name%", up);
+  main = main.replace("%Name%", up);
+  main = main.replace("%Name%", up);
 
 
   // console.log(res);

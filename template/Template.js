@@ -1,3 +1,6 @@
+// place in parent component:
+// import %Name% from './%Name%/%Name%';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './%name%.css';
