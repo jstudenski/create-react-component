@@ -2,7 +2,7 @@ var writeFile = require('write');
 var inquirer = require('inquirer');
 const fs = require('fs');
 
-let sass = fs.readFileSync('template/template.sass', 'utf8');
+let sass = fs.readFileSync('template/template.scss', 'utf8');
 let main = fs.readFileSync('template/Template.js', 'utf8');
 
 
@@ -34,7 +34,7 @@ inquirer.prompt([
     if (err) console.log(err);
   });
 
-  writeFile('output/'+up+'/'+low+'.sass', sass, function(err) {
+  writeFile('output/'+up+'/'+low+'.scss', sass, function(err) {
     if (err) console.log(err);
   });
 
