@@ -6,6 +6,7 @@ let sass = fs.readFileSync('template/template.scss', 'utf8');
 let main = fs.readFileSync('template/Template.js', 'utf8');
 
 
+
 inquirer.prompt([
   {
     type: "text",
