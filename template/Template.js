@@ -17,7 +17,6 @@ class %Name% extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     ctr: state.counter,
   };
