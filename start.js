@@ -10,6 +10,12 @@ inquirer.prompt([
     type: "text",
     message: "Component Name?",
     name: "name",
+  },
+  {
+    type: 'list',
+    message: "Stylesheet?",
+    name: "stylesheet",
+    choices: ['sass', 'css', 'none',]
   }
 ]).then(function(inquirerResponse) {
 
