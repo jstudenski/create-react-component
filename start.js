@@ -20,7 +20,17 @@ inquirer.prompt([{
     type: 'list',
     message: "Add Jest .test.js file?",
     name: "tests",
+<<<<<<< HEAD
     choices: ['yes', 'no', ]
+=======
+    choices: ['yes', 'no',]
+  },
+  {
+    type: 'list',
+    message: "Has state?",
+    name: "state",
+    choices: ['yes', 'no',]
+>>>>>>> 41e46f012a232c3953d3fb99ee246d6022d08379
   }
 ]).then(function(res) {
 
@@ -56,4 +66,22 @@ inquirer.prompt([{
     if (err) console.log(err);
   });
 
+<<<<<<< HEAD
+=======
+
+  let writeStream = fs.createWriteStream('output/secret.txt');
+
+  writeStream.write('hello\n');
+  writeStream.write('world');
+
+  writeStream.on('finish', () => {
+      console.log('wrote all data to file');
+  });
+
+  // close the stream
+  writeStream.end();
+
+
+
+>>>>>>> 41e46f012a232c3953d3fb99ee246d6022d08379
 });
