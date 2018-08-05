@@ -5,8 +5,7 @@ const fs = require('fs');
 let sass = fs.readFileSync('template/template.scss', 'utf8');
 let main = fs.readFileSync('template/Template.js', 'utf8');
 
-inquirer.prompt([
-  {
+inquirer.prompt([{
     type: "text",
     message: "Component Name?",
     name: "name",
@@ -15,13 +14,13 @@ inquirer.prompt([
     type: 'list',
     message: "Stylesheet?",
     name: "stylesheet",
-    choices: ['sass', 'css', 'none',]
+    choices: ['sass', 'css', 'none', ]
   },
   {
     type: 'list',
     message: "Add Jest .test.js file?",
     name: "tests",
-    choices: ['yes', 'no',]
+    choices: ['yes', 'no', ]
   }
 ]).then(function(res) {
 
@@ -47,17 +46,14 @@ inquirer.prompt([
   main = main.replace("%Name%", up);
   main = main.replace("%Name%", up);
 
-
   // console.log(res);
 
-  writeFile('output/'+up+'/'+up+'.js', main, function(err) {
+  writeFile('output/' + up + '/' + up + '.js', main, function(err) {
     if (err) console.log(err);
   });
 
-  writeFile('output/'+up+'/'+low+'.scss', sass, function(err) {
+  writeFile('output/' + up + '/' + low + '.scss', sass, function(err) {
     if (err) console.log(err);
   });
-
-
 
 });
