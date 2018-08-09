@@ -35,47 +35,59 @@ inquirer.prompt([
     console.log("oops");
   }
 
-  const styleSheet = res.stylesheet;
-  var low = res.name.toLowerCase();
-  var up = low.charAt(0).toUpperCase() + low.substr(1)
+  let name = res.name.toLowerCase()
+  let component;
+  // let low = res.name.toLowerCase();
+  component = {
+    nameLowercase: name,
+    nameUppercase: name.charAt(0).toUpperCase() + name.substr(1),
+  }
 
-  console.log(styleSheet);
-  console.log(low);
-  console.log(up);
-
-  sass = sass.replace("%name%", low);
-  main = main.replace("%name%", low);
-  main = main.replace("%name%", low);
-  main = main.replace("%name%", low);
-  main = main.replace("%Name%", up);
-  main = main.replace("%Name%", up);
-  main = main.replace("%Name%", up);
-  main = main.replace("%Name%", up);
-  main = main.replace("%Name%", up);
+  console.log(component);
 
 
-  // console.log(res);
+  // const styleSheet = res.stylesheet;
+  // var low = 
+  // var up = 
 
-  writeFile('output/'+up+'/'+up+'.js', main, function(err) {
-    if (err) console.log(err);
-  });
-
-  writeFile('output/'+up+'/'+low+'.scss', sass, function(err) {
-    if (err) console.log(err);
-  });
+  // console.log(styleSheet);
+  // console.log(low);
+  // console.log(up);
 
 
-  let writeStream = fs.createWriteStream('output/secret.txt');
+  // sass = sass.replace("%name%", low);
+  // main = main.replace("%name%", low);
+  // main = main.replace("%name%", low);
+  // main = main.replace("%name%", low);
+  // main = main.replace("%Name%", up);
+  // main = main.replace("%Name%", up);
+  // main = main.replace("%Name%", up);
+  // main = main.replace("%Name%", up);
+  // main = main.replace("%Name%", up);
 
-  writeStream.write('hello\n');
-  writeStream.write('world');
 
-  writeStream.on('finish', () => {
-      console.log('wrote all data to file');
-  });
+  // // console.log(res);
 
-  // close the stream
-  writeStream.end();
+  // writeFile('output/'+up+'/'+up+'.js', main, function(err) {
+  //   if (err) console.log(err);
+  // });
+
+  // writeFile('output/'+up+'/'+low+'.scss', sass, function(err) {
+  //   if (err) console.log(err);
+  // });
+
+
+  // let writeStream = fs.createWriteStream('output/secret.txt');
+
+  // writeStream.write('hello\n');
+  // writeStream.write('world');
+
+  // writeStream.on('finish', () => {
+  //     console.log('wrote all data to file');
+  // });
+
+  // // close the stream
+  // writeStream.end();
 
 
 
