@@ -20,9 +20,7 @@ inquirer.prompt([{
     type: 'list',
     message: "Add Jest .test.js file?",
     name: "tests",
-<<<<<<< HEAD
-    choices: ['yes', 'no', ]
-=======
+
     choices: ['yes', 'no',]
   },
   {
@@ -30,7 +28,6 @@ inquirer.prompt([{
     message: "Has state?",
     name: "state",
     choices: ['yes', 'no',]
->>>>>>> 41e46f012a232c3953d3fb99ee246d6022d08379
   }
 ]).then(function(res) {
 
@@ -50,13 +47,12 @@ inquirer.prompt([{
 
 
   // const styleSheet = res.stylesheet;
-  // var low = 
-  // var up = 
+  // var low =
+  // var up =
 
   // console.log(styleSheet);
   // console.log(low);
   // console.log(up);
-
 
   // sass = sass.replace("%name%", low);
   // main = main.replace("%name%", low);
@@ -68,7 +64,6 @@ inquirer.prompt([{
   // main = main.replace("%Name%", up);
   // main = main.replace("%Name%", up);
 
-<<<<<<< HEAD
 
   // // console.log(res);
 
@@ -79,20 +74,7 @@ inquirer.prompt([{
   // writeFile('output/'+up+'/'+low+'.scss', sass, function(err) {
   //   if (err) console.log(err);
   // });
-=======
-  // console.log(res);
 
-  writeFile('output/' + up + '/' + up + '.js', main, function(err) {
-    if (err) console.log(err);
-  });
-
-  writeFile('output/' + up + '/' + low + '.scss', sass, function(err) {
-    if (err) console.log(err);
-  });
->>>>>>> f1336959471cf2cb10a2773ac19d571c55f483af
-
-<<<<<<< HEAD
-=======
 
   // let writeStream = fs.createWriteStream('output/secret.txt');
 
@@ -106,7 +88,4 @@ inquirer.prompt([{
   // // close the stream
   // writeStream.end();
 
-
-
->>>>>>> 41e46f012a232c3953d3fb99ee246d6022d08379
 });
