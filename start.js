@@ -5,8 +5,7 @@ const fs = require('fs');
 let sass = fs.readFileSync('template/template.scss', 'utf8');
 let main = fs.readFileSync('template/Template.js', 'utf8');
 
-inquirer.prompt([
-  {
+inquirer.prompt([{
     type: "text",
     message: "Component Name?",
     name: "name",
@@ -15,12 +14,15 @@ inquirer.prompt([
     type: 'list',
     message: "Stylesheet?",
     name: "stylesheet",
-    choices: ['sass', 'css', 'none',]
+    choices: ['sass', 'css', 'none', ]
   },
   {
     type: 'list',
     message: "Add Jest .test.js file?",
     name: "tests",
+<<<<<<< HEAD
+    choices: ['yes', 'no', ]
+=======
     choices: ['yes', 'no',]
   },
   {
@@ -28,6 +30,7 @@ inquirer.prompt([
     message: "Has state?",
     name: "state",
     choices: ['yes', 'no',]
+>>>>>>> 41e46f012a232c3953d3fb99ee246d6022d08379
   }
 ]).then(function(res) {
 
@@ -65,6 +68,7 @@ inquirer.prompt([
   // main = main.replace("%Name%", up);
   // main = main.replace("%Name%", up);
 
+<<<<<<< HEAD
 
   // // console.log(res);
 
@@ -75,7 +79,20 @@ inquirer.prompt([
   // writeFile('output/'+up+'/'+low+'.scss', sass, function(err) {
   //   if (err) console.log(err);
   // });
+=======
+  // console.log(res);
 
+  writeFile('output/' + up + '/' + up + '.js', main, function(err) {
+    if (err) console.log(err);
+  });
+
+  writeFile('output/' + up + '/' + low + '.scss', sass, function(err) {
+    if (err) console.log(err);
+  });
+>>>>>>> f1336959471cf2cb10a2773ac19d571c55f483af
+
+<<<<<<< HEAD
+=======
 
   // let writeStream = fs.createWriteStream('output/secret.txt');
 
@@ -91,4 +108,5 @@ inquirer.prompt([
 
 
 
+>>>>>>> 41e46f012a232c3953d3fb99ee246d6022d08379
 });
