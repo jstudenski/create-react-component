@@ -70,7 +70,9 @@ inquirer.prompt([{
   writeStream.write(imports(component));
   writeStream.write("class "+component.nameUppercase+" extends React.Component {\n");
   writeStream.write(state(component));
+  writeStream.write(contents());
   writeStream.write("}\n\n");
+  writeStream.write("export default "+component.nameUppercase+"\n\n");
   writeStream.on('finish', () => {
     console.log('component created');
   });
@@ -102,6 +104,18 @@ state = (component) => {
     return output;
   }
 };
+
+contents = () => {
+  let output = "  render() {\n" +
+  "    return (\n" +
+  "      return <h1>Hello, {this.props.name}</h1>;\n" +
+  "    }\n" +
+  "  }\n"
+  return output;
+}
+
+
+
 
 
 props = (name) => {
