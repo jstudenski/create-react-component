@@ -23,12 +23,12 @@ inquirer.prompt([{
 
   //   choices: ['yes', 'no',]
   // },
-  // {
-  //   type: 'list',
-  //   message: "Has state?",
-  //   name: "state",
-  //   choices: ['yes', 'no',]
-  // }
+  {
+    type: 'list',
+    message: "Has state?",
+    name: "state",
+    choices: ['yes', 'no',]
+  }
 ]).then(function (res) {
 // Error Handling:
   // no component name
@@ -40,21 +40,10 @@ inquirer.prompt([{
     nameLowercase: name,
     nameUppercase: name.charAt(0).toUpperCase() + name.substr(1),
     styleSheet: res.stylesheet,
+    state: res.state,
   }
 
-
-  console.log(component);
-  console.log(props());
-
-  imports(component)
-
   // const styleSheet = res.stylesheet;
-  // var low =
-  // var up =
-
-  // console.log(styleSheet);
-  // console.log(low);
-  // console.log(up);
 
   // sass = sass.replace("%name%", low);
   // main = main.replace("%name%", low);
@@ -66,7 +55,6 @@ inquirer.prompt([{
   // main = main.replace("%Name%", up);
   // main = main.replace("%Name%", up);
 
-
   // // console.log(res);
 
   // writeFile('output/'+up+'/'+up+'.js', main, function(err) {
@@ -77,28 +65,43 @@ inquirer.prompt([{
   //   if (err) console.log(err);
   // });
 
+  let writeStream = fs.createWriteStream('output/secret.js');
 
-  // let writeStream = fs.createWriteStream('output/secret.txt');
+  writeStream.write(imports(component));
+  writeStream.write("class "+component.nameUppercase+" extends React.Component {\n");
+  writeStream.write(state(component));
+  writeStream.write("}\n\n");
+  writeStream.on('finish', () => {
+    console.log('component created');
+  });
 
-  // writeStream.write('hello\n');
-  // writeStream.write('world');
-
-  // writeStream.on('finish', () => {
-  //     console.log('wrote all data to file');
-  // });
-
-  // // close the stream
-  // writeStream.end();
+  // close the stream
+  writeStream.end();
 
 });
 
 imports = (component) => {
-  console.log("import React, { Component } from 'react';");
+  let output = "import React, { Component } from 'react';\n";
   // External Stylesheet
   component.styleSheet == 'css' || component.styleSheet == 'sass' ?
-    console.log("import './" + component.nameUppercase + "." + component.styleSheet + "';"):
+    output+="import './" + component.nameUppercase + "." + component.styleSheet + "';\n":
     null;
+    output+="\n";
+  return output;
 }
+
+state = (component) => {
+  let output = "";
+  if (component.state = 'yes') {
+    output+="  constructor(props) {\n" +
+    "    super(props);\n" +
+    "    this.state = {\n" +
+    "      date: new Date(),\n" +
+    "    };\n" +
+    "  }\n"
+    return output;
+  }
+};
 
 
 props = (name) => {
