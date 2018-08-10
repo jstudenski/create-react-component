@@ -20,7 +20,6 @@ inquirer.prompt([{
   //   type: 'list',
   //   message: "Add Jest .test.js file?",
   //   name: "tests",
-
   //   choices: ['yes', 'no',]
   // },
   {
@@ -43,27 +42,6 @@ inquirer.prompt([{
     state: res.state,
   }
 
-  // const styleSheet = res.stylesheet;
-
-  // sass = sass.replace("%name%", low);
-  // main = main.replace("%name%", low);
-  // main = main.replace("%name%", low);
-  // main = main.replace("%name%", low);
-  // main = main.replace("%Name%", up);
-  // main = main.replace("%Name%", up);
-  // main = main.replace("%Name%", up);
-  // main = main.replace("%Name%", up);
-  // main = main.replace("%Name%", up);
-
-  // // console.log(res);
-
-  // writeFile('output/'+up+'/'+up+'.js', main, function(err) {
-  //   if (err) console.log(err);
-  // });
-
-  // writeFile('output/'+up+'/'+low+'.scss', sass, function(err) {
-  //   if (err) console.log(err);
-  // });
 
   let writeStream = fs.createWriteStream('output/secret.js');
 
@@ -72,11 +50,11 @@ inquirer.prompt([{
   writeStream.write(state(component));
   writeStream.write(contents());
   writeStream.write("}\n\n");
+  writeStream.write(propTypes(component));
   writeStream.write("export default "+component.nameUppercase+"\n\n");
   writeStream.on('finish', () => {
     console.log('component created');
   });
-
   // close the stream
   writeStream.end();
 
@@ -84,6 +62,7 @@ inquirer.prompt([{
 
 imports = (component) => {
   let output = "import React, { Component } from 'react';\n";
+  output+="import PropTypes from 'prop-types';\n"
   // External Stylesheet
   component.styleSheet == 'css' || component.styleSheet == 'sass' ?
     output+="import './" + component.nameUppercase + "." + component.styleSheet + "';\n":
@@ -98,7 +77,7 @@ state = (component) => {
     output+="  constructor(props) {\n" +
     "    super(props);\n" +
     "    this.state = {\n" +
-    "      date: new Date(),\n" +
+    "      name: 'world',\n" +
     "    };\n" +
     "  }\n"
     return output;
@@ -114,9 +93,15 @@ contents = () => {
   return output;
 }
 
-
-
-
+propTypes = (component) => {
+  let output = component.nameUppercase+".propTypes = {\n" +
+    "  // name: PropTypes.string.isRequired\n" +
+  "};\n\n" +
+  component.nameUppercase+".defaultProps = {\n" +
+    "  // name: 'Stranger'\n" +
+  "};\n\n"
+  return output;
+}
 
 props = (name) => {
   return getRandomColor();
