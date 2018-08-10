@@ -43,52 +43,94 @@ inquirer.prompt([{
   }
 
 
-  let writeStream = fs.createWriteStream('output/secret.js');
+// Main File
+  let mainFile = fs.createWriteStream('output/secret.js');
+  // imports
+  add(mainFile, "import React, { Component } from 'react';", 0);
+  add(mainFile, "import PropTypes from 'prop-types';", 0);
+  // component has external stylesheet
+  component.styleSheet !== 'none' ?
+    add(mainFile, "import './" + component.nameUppercase + ".css'", 0) :
+    null;
+  add(mainFile, "", 0);
+  add(mainFile, "class "+component.nameUppercase+" extends React.Component {", 0);
+  // component has state
+  component.state == 'yes' ?
+    add(mainFile, "constructor(props) {", 1) +
+    add(mainFile, "super(props) {", 2) +
+    add(mainFile, "this.state = {", 2) +
+    add(mainFile, "name: 'world',", 3) +
+    add(mainFile, "};", 2) +
+    add(mainFile, "}", 1) :
+    null;
 
-  writeStream.write(imports(component));
-  writeStream.write("class "+component.nameUppercase+" extends React.Component {\n");
-  writeStream.write(state(component));
-  writeStream.write(contents());
-  writeStream.write("}\n\n");
-  writeStream.write(propTypes(component));
-  writeStream.write("export default "+component.nameUppercase+"\n\n");
-  writeStream.on('finish', () => {
+
+  add(mainFile, "", 0);
+  add(mainFile, "", 0);
+    //   output+="constructor(props) {" +
+    //   "    super(props);" +
+    //   "    this.state = {" +
+    //   "      name: 'world'," +
+    //   "    };\n" +
+    //   "  }\n"
+    //   return output;
+    // }
+
+
+ // mainFile.write(\n");
+//  mainFile.write(state(component));
+  mainFile.write(contents(component));
+  mainFile.write("}\n\n");
+  mainFile.write(propTypes(component));
+  mainFile.write("export default "+component.nameUppercase+"\n\n");
+  mainFile.on('finish', () => {
     console.log('component created');
   });
   // close the stream
-  writeStream.end();
+  mainFile.end();
+
+// Stylesheet
+  let styleStream = fs.createWriteStream('output/secret.css');
+  styleStream.write("."+component.nameLowercase + " {\n");
+  styleStream.write("  background-color: " + getRandomColor() + ";\n");
+  styleStream.write("  width: 100px;\n");
+  styleStream.write("  height: 100px;\n");
+  styleStream.write("}\n");
+
+  styleStream.on('finish', () => {
+    console.log('sylesheet created');
+  });
+  styleStream.end();
+
 
 });
 
-imports = (component) => {
-  let output = "import React, { Component } from 'react';\n";
-  output+="import PropTypes from 'prop-types';\n"
-  // External Stylesheet
-  component.styleSheet == 'css' || component.styleSheet == 'sass' ?
-    output+="import './" + component.nameUppercase + "." + component.styleSheet + "';\n":
-    null;
-    output+="\n";
-  return output;
-}
 
-state = (component) => {
-  let output = "";
-  if (component.state = 'yes') {
-    output+="  constructor(props) {\n" +
-    "    super(props);\n" +
-    "    this.state = {\n" +
-    "      name: 'world',\n" +
-    "    };\n" +
-    "  }\n"
-    return output;
-  }
-};
 
-contents = () => {
+// imports = (component) => {
+
+//   // let output = \n";
+//   // output+="import PropTypes from 'prop-types';\n"
+//   // External Stylesheet
+//   component.styleSheet == 'css' || component.styleSheet == 'sass' ?
+//     output+="import './" + component.nameUppercase + "." + component.styleSheet + "';\n":
+//     null;
+//     output+="\n";
+//   return output;
+// }
+
+
+contents = (component) => {
   let output = "  render() {\n" +
-  "    return (\n" +
-  "      return <h1>Hello, {this.props.name}</h1>;\n" +
-  "    }\n" +
+  "    return (\n"
+
+  if (component.styleSheet == 'css' || component.styleSheet == 'sass') {
+    output += "       <div styleName='"+ component.nameLowercase +".css'>\n";
+  } else {
+    output += "      <div>\n";
+  };
+  output += "        <h1>Hello, {this.props.name}</h1>;\n" +
+  "    </div>\n" +
   "  }\n"
   return output;
 }
@@ -114,4 +156,10 @@ getRandomColor = () => {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+
+add = (stream, str, tabs) => {
+  tabs = '  '.repeat(tabs)
+  stream.write(tabs + str + "\n");
 }
