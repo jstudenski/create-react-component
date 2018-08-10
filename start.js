@@ -44,63 +44,71 @@ inquirer.prompt([{
 
 
 // Main File
-  let mainFile = fs.createWriteStream('output/secret.js');
+  let main = fs.createWriteStream('output/secret.js');
   // imports
-  add(mainFile, "import React, { Component } from 'react';", 0);
-  add(mainFile, "import PropTypes from 'prop-types';", 0);
+  add(main, 0, "import React from 'react';");
+  add(main, 0,  "import PropTypes from 'prop-types';");
   // component has external stylesheet
   component.styleSheet !== 'none' ?
-    add(mainFile, "import './" + component.nameUppercase + ".css'", 0) :
+    add(main, 0,  "import './" + component.nameUppercase + ".css'") :
     null;
-  add(mainFile, "", 0);
-  add(mainFile, "class "+component.nameUppercase+" extends React.Component {", 0);
+  add(main, 0,  "");
+  add(main, 0,  "class "+component.nameUppercase+" extends React.Component {");
   // component has state
   component.state == 'yes' ?
-    add(mainFile, "constructor(props) {", 1) +
-    add(mainFile, "super(props) {", 2) +
-    add(mainFile, "this.state = {", 2) +
-    add(mainFile, "name: 'world',", 3) +
-    add(mainFile, "};", 2) +
-    add(mainFile, "}", 1) :
+    add(main, 1, "constructor(props) {") +
+    add(main, 2, "super(props);") +
+    add(main, 2, "this.state = {") +
+    add(main, 3, "counter: 0") +
+    add(main, 2, "};") +
+    add(main, 2, "this.handleClick = this.handleClick.bind(this);") +
+    add(main, 1, "}") :
     null;
+  add(main, 0,  "");
+  add(main, 1, "render() {");
+  add(main, 2, "return (");
+  component.styleSheet !== 'none' ?
+    add(main, 3, "<div className='"+ component.nameLowercase +".css'>") :
+    add(main, 3, "<div>");
+  add(main, 4, "<h1>Hello, {this.state.counter}</h1>");
+  add(main, 3, "</div>");
+  add(main, 2, ")");
+  add(main, 1, "}");
+  add(main, 0, "}");
+  add(main, 0,  "");
+  // proptypes
+  add(main, 0, component.nameUppercase+".propTypes = {");
+  add(main, 0, "// name: PropTypes.string.isRequired");
+  add(main, 0, "};");
+  add(main, 0, "");
+  add(main, 0, component.nameUppercase+".defaultProps = {");
+  add(main, 1,  "name: PropTypes.string.isRequired");
+  add(main, 0,  "};");
+  add(main, 0, "");
+  add(main, 0, "export default "+component.nameUppercase+"");
 
-
-  add(mainFile, "", 0);
-  add(mainFile, "", 0);
-    //   output+="constructor(props) {" +
-    //   "    super(props);" +
-    //   "    this.state = {" +
-    //   "      name: 'world'," +
-    //   "    };\n" +
-    //   "  }\n"
-    //   return output;
-    // }
-
-
- // mainFile.write(\n");
-//  mainFile.write(state(component));
-  mainFile.write(contents(component));
-  mainFile.write("}\n\n");
-  mainFile.write(propTypes(component));
-  mainFile.write("export default "+component.nameUppercase+"\n\n");
-  mainFile.on('finish', () => {
+  main.on('finish', () => {
     console.log('component created');
   });
-  // close the stream
-  mainFile.end();
+
+  main.end();
+
+  const primary = getRandomColor();
+  const secondary = getInvertedColor(primary);
 
 // Stylesheet
-  let styleStream = fs.createWriteStream('output/secret.css');
-  styleStream.write("."+component.nameLowercase + " {\n");
-  styleStream.write("  background-color: " + getRandomColor() + ";\n");
-  styleStream.write("  width: 100px;\n");
-  styleStream.write("  height: 100px;\n");
-  styleStream.write("}\n");
+  let style = fs.createWriteStream('output/secret.css');
+  style.write("."+component.nameLowercase + " {\n");
+  style.write("  background-color: " + primary + ";\n");
+  style.write("  color: " + secondary + ";\n");
+  style.write("  width: 100px;\n");
+  style.write("  height: 100px;\n");
+  style.write("}\n");
 
-  styleStream.on('finish', () => {
+  style.on('finish', () => {
     console.log('sylesheet created');
   });
-  styleStream.end();
+  style.end();
 
 
 });
@@ -120,46 +128,52 @@ inquirer.prompt([{
 // }
 
 
-contents = (component) => {
-  let output = "  render() {\n" +
-  "    return (\n"
 
-  if (component.styleSheet == 'css' || component.styleSheet == 'sass') {
-    output += "       <div styleName='"+ component.nameLowercase +".css'>\n";
-  } else {
-    output += "      <div>\n";
-  };
-  output += "        <h1>Hello, {this.props.name}</h1>;\n" +
-  "    </div>\n" +
-  "  }\n"
-  return output;
-}
 
-propTypes = (component) => {
-  let output = component.nameUppercase+".propTypes = {\n" +
-    "  // name: PropTypes.string.isRequired\n" +
-  "};\n\n" +
-  component.nameUppercase+".defaultProps = {\n" +
-    "  // name: 'Stranger'\n" +
-  "};\n\n"
-  return output;
-}
 
 props = (name) => {
   return getRandomColor();
 }
 
 getRandomColor = () => {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
 
+getInvertedColor = (hexnum) => {
 
-add = (stream, str, tabs) => {
+  var splitnum = hexnum.split("");
+  splitnum.shift();
+
+  console.log(splitnum);
+
+  var resultnum = "";
+  var simplenum = "FEDCBA9876".split("");
+  var complexnum = new Array();
+  complexnum.A = "5";
+  complexnum.B = "4";
+  complexnum.C = "3";
+  complexnum.D = "2";
+  complexnum.E = "1";
+  complexnum.F = "0";
+
+  for(i=0; i<6; i++){
+    if(!isNaN(splitnum[i])) {
+      resultnum += simplenum[splitnum[i]];
+    } else if(complexnum[splitnum[i]]){
+      resultnum += complexnum[splitnum[i]];
+    } else {
+      return false;
+    }
+  }
+  return '#' + resultnum;
+}
+
+add = (stream, tabs, str) => {
   tabs = '  '.repeat(tabs)
   stream.write(tabs + str + "\n");
 }
