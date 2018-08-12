@@ -149,7 +149,7 @@ getInvertedColor = (hexnum) => {
   var splitnum = hexnum.split("");
   splitnum.shift();
 
-  console.log(splitnum);
+  // console.log(splitnum);
 
   var resultnum = "";
   var simplenum = "FEDCBA9876".split("");
