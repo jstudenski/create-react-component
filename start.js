@@ -93,14 +93,16 @@ inquirer.prompt([{
 
   main.end();
 
-  const primary = getRandomColor();
-  const secondary = getInvertedColor(primary);
+  const color = getRandomColor();
+
+  // const secondary = getInvertedColor(primary);
+  // const secondaryTwo = getInvertedColorTwo(primary);
 
 // Stylesheet
   let style = fs.createWriteStream('output/secret.css');
   style.write("."+component.nameLowercase + " {\n");
-  style.write("  background-color: " + primary + ";\n");
-  style.write("  color: " + secondary + ";\n");
+  style.write("  background-color: " + color.primary + ";\n");
+  style.write("  color: " + color.secondary + ";\n");
   style.write("  width: 100px;\n");
   style.write("  height: 100px;\n");
   style.write("}\n");
@@ -131,46 +133,19 @@ inquirer.prompt([{
 
 
 
-props = (name) => {
-  return getRandomColor();
-}
+// props = (name) => {
+//   return getRandomColor();
+// }
 
 getRandomColor = () => {
   const letters = '0123456789ABCDEF';
-  let color = '#';
+  let colors = { primary:'#', secondary:'#'};
   for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+    let rand = Math.floor(Math.random() * 16);
+    colors.primary += letters[rand];
+    colors.secondary += letters[letters.length-1-rand];
   }
-  return color;
-}
-
-getInvertedColor = (hexnum) => {
-
-  var splitnum = hexnum.split("");
-  splitnum.shift();
-
-  // console.log(splitnum);
-
-  var resultnum = "";
-  var simplenum = "FEDCBA9876".split("");
-  var complexnum = new Array();
-  complexnum.A = "5";
-  complexnum.B = "4";
-  complexnum.C = "3";
-  complexnum.D = "2";
-  complexnum.E = "1";
-  complexnum.F = "0";
-
-  for(i=0; i<6; i++){
-    if(!isNaN(splitnum[i])) {
-      resultnum += simplenum[splitnum[i]];
-    } else if(complexnum[splitnum[i]]){
-      resultnum += complexnum[splitnum[i]];
-    } else {
-      return false;
-    }
-  }
-  return '#' + resultnum;
+  return colors;
 }
 
 add = (stream, tabs, str) => {
