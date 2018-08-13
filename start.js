@@ -128,9 +128,6 @@ inquirer.prompt([{
 // }
 
 
-
-
-
 props = (name) => {
   return getRandomColor();
 }
@@ -145,8 +142,7 @@ getRandomColor = () => {
 }
 
 getInvertedColor = (hexnum) => {
-
-  var splitnum = hexnum.split("");
+  let splitnum = hexnum.split("");
   splitnum.shift();
 
   console.log(splitnum);
@@ -160,6 +156,8 @@ getInvertedColor = (hexnum) => {
   complexnum.D = "2";
   complexnum.E = "1";
   complexnum.F = "0";
+
+  console.log();
 
   for(i=0; i<6; i++){
     if(!isNaN(splitnum[i])) {
