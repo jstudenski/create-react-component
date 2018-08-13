@@ -93,14 +93,16 @@ inquirer.prompt([{
 
   main.end();
 
-  const primary = getRandomColor();
-  const secondary = getInvertedColor(primary);
+  const color = getRandomColor();
+
+  // const secondary = getInvertedColor(primary);
+  // const secondaryTwo = getInvertedColorTwo(primary);
 
 // Stylesheet
   let style = fs.createWriteStream('output/secret.css');
   style.write("."+component.nameLowercase + " {\n");
-  style.write("  background-color: " + primary + ";\n");
-  style.write("  color: " + secondary + ";\n");
+  style.write("  background-color: " + color.primary + ";\n");
+  style.write("  color: " + color.secondary + ";\n");
   style.write("  width: 100px;\n");
   style.write("  height: 100px;\n");
   style.write("}\n");
@@ -128,16 +130,28 @@ inquirer.prompt([{
 // }
 
 
+<<<<<<< HEAD
 props = (name) => {
   return getRandomColor();
 }
+=======
+
+
+
+// props = (name) => {
+//   return getRandomColor();
+// }
+>>>>>>> 0b7e0c203bca843cb941891dde3f564cdc9b5be9
 
 getRandomColor = () => {
   const letters = '0123456789ABCDEF';
-  let color = '#';
+  let colors = { primary:'#', secondary:'#'};
   for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+    let rand = Math.floor(Math.random() * 16);
+    colors.primary += letters[rand];
+    colors.secondary += letters[letters.length-1-rand];
   }
+<<<<<<< HEAD
   return color;
 }
 
@@ -169,6 +183,9 @@ getInvertedColor = (hexnum) => {
     }
   }
   return '#' + resultnum;
+=======
+  return colors;
+>>>>>>> 0b7e0c203bca843cb941891dde3f564cdc9b5be9
 }
 
 add = (stream, tabs, str) => {
