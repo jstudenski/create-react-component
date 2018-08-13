@@ -112,9 +112,7 @@ inquirer.prompt([{
   });
   style.end();
 
-
 });
-
 
 
 // imports = (component) => {
@@ -130,18 +128,9 @@ inquirer.prompt([{
 // }
 
 
-<<<<<<< HEAD
 props = (name) => {
   return getRandomColor();
 }
-=======
-
-
-
-// props = (name) => {
-//   return getRandomColor();
-// }
->>>>>>> 0b7e0c203bca843cb941891dde3f564cdc9b5be9
 
 getRandomColor = () => {
   const letters = '0123456789ABCDEF';
@@ -151,42 +140,9 @@ getRandomColor = () => {
     colors.primary += letters[rand];
     colors.secondary += letters[letters.length-1-rand];
   }
-<<<<<<< HEAD
-  return color;
-}
-
-getInvertedColor = (hexnum) => {
-  let splitnum = hexnum.split("");
-  splitnum.shift();
-
-  console.log(splitnum);
-
-  var resultnum = "";
-  var simplenum = "FEDCBA9876".split("");
-  var complexnum = new Array();
-  complexnum.A = "5";
-  complexnum.B = "4";
-  complexnum.C = "3";
-  complexnum.D = "2";
-  complexnum.E = "1";
-  complexnum.F = "0";
-
-  console.log();
-
-  for(i=0; i<6; i++){
-    if(!isNaN(splitnum[i])) {
-      resultnum += simplenum[splitnum[i]];
-    } else if(complexnum[splitnum[i]]){
-      resultnum += complexnum[splitnum[i]];
-    } else {
-      return false;
-    }
-  }
-  return '#' + resultnum;
-=======
   return colors;
->>>>>>> 0b7e0c203bca843cb941891dde3f564cdc9b5be9
 }
+
 
 add = (stream, tabs, str) => {
   tabs = '  '.repeat(tabs)
