@@ -31,7 +31,10 @@ inquirer.prompt([{
 ]).then(function (res) {
 // Error Handling:
   // no component name
-  if (res.name.length == 0) {console.log("oops");}
+  if (res.name.length == 0) {
+    console.log("oops");
+    return;
+  }
 
   let name = res.name.toLowerCase()
 
@@ -95,9 +98,6 @@ inquirer.prompt([{
 
   const color = getRandomColor();
 
-  // const secondary = getInvertedColor(primary);
-  // const secondaryTwo = getInvertedColorTwo(primary);
-
 // Stylesheet
   let style = fs.createWriteStream('output/secret.css');
   style.write("."+component.nameLowercase + " {\n");
@@ -116,7 +116,6 @@ inquirer.prompt([{
 
 
 // imports = (component) => {
-
 //   // let output = \n";
 //   // output+="import PropTypes from 'prop-types';\n"
 //   // External Stylesheet
