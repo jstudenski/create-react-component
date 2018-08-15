@@ -45,6 +45,12 @@ inquirer.prompt([{
     state: res.state,
   }
 
+  let styleFile = component.nameLowercase;
+
+  (component.styleSheet == 'css') ? styleFile += '.css':null;
+  (component.styleSheet == 'sass') ? styleFile += '.scss':null;
+
+  console.log(styleFile);
 
 // Main File
   let main = fs.createWriteStream('output/secret.js');
