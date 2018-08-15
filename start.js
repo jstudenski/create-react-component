@@ -45,12 +45,7 @@ inquirer.prompt([{
     state: res.state,
   }
 
-  let styleFile = component.nameLowercase;
 
-  (component.styleSheet == 'css') ? styleFile += '.css':null;
-  (component.styleSheet == 'sass') ? styleFile += '.scss':null;
-
-  console.log(styleFile);
 
 // Main File
   let main = fs.createWriteStream('output/secret.js');
@@ -104,19 +99,25 @@ inquirer.prompt([{
 
   const color = getRandomColor();
 
-// Stylesheet
-  let style = fs.createWriteStream('output/secret.css');
-  style.write("."+component.nameLowercase + " {\n");
-  style.write("  background-color: " + color.primary + ";\n");
-  style.write("  color: " + color.secondary + ";\n");
-  style.write("  width: 100px;\n");
-  style.write("  height: 100px;\n");
-  style.write("}\n");
 
-  style.on('finish', () => {
-    console.log('sylesheet created');
-  });
-  style.end();
+
+  // optional external stylesheet
+  if (component.styleSheet !== 'none') {
+
+    const type = (component.styleSheet == 'css') ? '.css' : '.scss';
+    const style = fs.createWriteStream('output/'+ component.nameLowercase + type);
+
+    style.write("." + component.nameLowercase + " {\n");
+    style.write("  background-color: " + color.primary + ";\n");
+    style.write("  color: " + color.secondary + ";\n");
+    style.write("  width: 100px;\n");
+    style.write("  height: 100px;\n");
+    style.write("}\n");
+    style.on('finish', () => { console.log('sylesheet created') });
+    style.end();
+  };
+
+
 
 });
 
