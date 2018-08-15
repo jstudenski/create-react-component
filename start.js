@@ -97,26 +97,20 @@ inquirer.prompt([{
 
   main.end();
 
-  const color = getRandomColor();
-
-
-
   // optional external stylesheet
   if (component.styleSheet !== 'none') {
-
-    const type = (component.styleSheet == 'css') ? '.css' : '.scss';
-    const style = fs.createWriteStream('output/'+ component.nameLowercase + type);
-
-    style.write("." + component.nameLowercase + " {\n");
-    style.write("  background-color: " + color.primary + ";\n");
-    style.write("  color: " + color.secondary + ";\n");
-    style.write("  width: 100px;\n");
-    style.write("  height: 100px;\n");
-    style.write("}\n");
+    const color = getRandomColor();
+    const fileType = (component.styleSheet == 'css') ? '.css' : '.scss';
+    const style = fs.createWriteStream('output/'+ component.nameLowercase + fileType);
+    add(style, 0, "." + component.nameLowercase + " {");
+    add(style, 1, "background-color: " + color.primary + ";");
+    add(style, 1, "color: " + color.secondary + ";");
+    add(style, 1, "width: 100px;");
+    add(style, 1, "height: 100px;");
+    add(style, 0, "}");
     style.on('finish', () => { console.log('sylesheet created') });
     style.end();
   };
-
 
 
 });
