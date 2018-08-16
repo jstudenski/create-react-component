@@ -68,13 +68,20 @@ inquirer.prompt([{
     add(main, 3, "counter: 0") +
     add(main, 2, "};") +
     add(main, 2, "this.handleClick = this.handleClick.bind(this);") +
+    add(main, 1, "}") +
+    add(main, 0, "") +
+    // sample handle click function
+    add(main, 1, "handleClick() {") +
+    add(main, 2, "this.setState(prevState => ({") +
+    add(main, 3, "counter: prevState.counter + 1") +
+    add(main, 2, "}));") +
     add(main, 1, "}") :
     null;
   add(main, 0,  "");
   add(main, 1, "render() {");
   add(main, 2, "return (");
   component.styleSheet !== 'none' ?
-    add(main, 3, "<div className='"+ component.nameLowercase +".css'>") :
+    add(main, 3, "<div className='"+ component.nameLowercase +"'>") :
     add(main, 3, "<div>");
   add(main, 4, "<h1>Hello, {this.state.counter}</h1>");
   add(main, 3, "</div>");
@@ -96,10 +103,9 @@ inquirer.prompt([{
   main.on('finish', () => {
     console.log('component created');
   });
-
   main.end();
 
-  // optional external stylesheet
+  // optional external stylesheet (css/scss)
   if (component.styleSheet !== 'none') {
     const color = getRandomColor();
     const fileType = (component.styleSheet == 'css') ? '.css' : '.scss';
@@ -107,13 +113,13 @@ inquirer.prompt([{
     add(style, 0, "." + component.nameLowercase + " {");
     add(style, 1, "background-color: " + color.primary + ";");
     add(style, 1, "color: " + color.secondary + ";");
-    add(style, 1, "width: 100px;");
-    add(style, 1, "height: 100px;");
+    add(style, 1, "width: 150px;");
+    add(style, 1, "height: 50px;");
+    add(style, 1, "border-radius: 5px;");
     add(style, 0, "}");
     style.on('finish', () => { console.log('sylesheet created') });
     style.end();
   };
-
 
 });
 
