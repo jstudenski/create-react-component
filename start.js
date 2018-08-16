@@ -48,13 +48,15 @@ inquirer.prompt([{
 
 
 // Main File
-  let main = fs.createWriteStream('output/secret.js');
+
+  let main = fs.createWriteStream('output/'+component.nameUppercase+'.js');
+
   // imports
   add(main, 0, "import React from 'react';");
   add(main, 0,  "import PropTypes from 'prop-types';");
   // component has external stylesheet
   component.styleSheet !== 'none' ?
-    add(main, 0,  "import './" + component.nameUppercase + ".css'") :
+    add(main, 0,  "import './" + component.nameLowercase + ".css'") :
     null;
   add(main, 0,  "");
   add(main, 0,  "class "+component.nameUppercase+" extends React.Component {");
