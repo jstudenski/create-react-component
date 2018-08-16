@@ -5,6 +5,7 @@ const fs = require('fs');
 // let sass = fs.readFileSync('template/template.scss', 'utf8');
 // let main = fs.readFileSync('template/Template.js', 'utf8');
 
+// TODO: add test files
 inquirer.prompt([{
     type: "text",
     message: "Component Name?",
@@ -31,6 +32,8 @@ inquirer.prompt([{
 ]).then(function (res) {
 // Error Handling:
   // no component name
+
+  // TODO: add error message or new prompt
   if (res.name.length == 0) {
     console.log("oops");
     return;
@@ -53,9 +56,11 @@ inquirer.prompt([{
     fs.mkdirSync(location);
   };
 
+  // TODO: index.js
+
+
   // Main File
   let main = fs.createWriteStream(location+comp.uppercase+'.js');
-
   // imports
   add(main, 0, "import React from 'react';");
   add(main, 0,  "import PropTypes from 'prop-types';");
