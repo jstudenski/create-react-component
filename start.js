@@ -38,30 +38,35 @@ inquirer.prompt([{
 
   let name = res.name.toLowerCase()
 
-  let component = {
-    nameLowercase: name,
-    nameUppercase: name.charAt(0).toUpperCase() + name.substr(1),
+  let comp = {
+    lowercase: name,
+    uppercase: name.charAt(0).toUpperCase() + name.substr(1),
     styleSheet: res.stylesheet,
     state: res.state,
   }
 
+  // folder location
+  const location = 'output/'+comp.uppercase+'/';
+  // create the folder if it doesnt exist already
+  if (!fs.existsSync(location)){
+    fs.mkdirSync(location);
+  };
 
+  // Main File
 
-// Main File
-
-  let main = fs.createWriteStream('output/'+component.nameUppercase+'.js');
+  let main = fs.createWriteStream(location+comp.uppercase+'.js');
 
   // imports
   add(main, 0, "import React from 'react';");
   add(main, 0,  "import PropTypes from 'prop-types';");
   // component has external stylesheet
-  component.styleSheet !== 'none' ?
-    add(main, 0,  "import './" + component.nameLowercase + ".css'") :
+  comp.styleSheet !== 'none' ?
+    add(main, 0,  "import './" + comp.lowercase + ".css'") :
     null;
   add(main, 0,  "");
-  add(main, 0,  "class "+component.nameUppercase+" extends React.Component {");
+  add(main, 0,  "class "+comp.uppercase+" extends React.Component {");
   // component has state
-  component.state == 'yes' ?
+  comp.state == 'yes' ?
     add(main, 1, "constructor(props) {") +
     add(main, 2, "super(props);") +
     add(main, 2, "this.state = {") +
@@ -80,10 +85,10 @@ inquirer.prompt([{
   add(main, 0,  "");
   add(main, 1, "render() {");
   add(main, 2, "return (");
-  component.styleSheet !== 'none' ?
-    add(main, 3, "<div className='"+ component.nameLowercase +"'>") :
+  comp.styleSheet !== 'none' ?
+    add(main, 3, "<div className='"+ comp.lowercase +"'>") :
     add(main, 3, "<div>");
-  component.state == 'yes' ?
+  comp.state == 'yes' ?
     add(main, 4, "<h1 onClick={this.handleClick}>Hello, {this.state.counter}</h1>") :
     add(main, 4, "<h1>Hello, World</h1>");
   add(main, 3, "</div>");
@@ -92,15 +97,15 @@ inquirer.prompt([{
   add(main, 0, "}");
   add(main, 0,  "");
   // proptypes
-  add(main, 0, component.nameUppercase+".propTypes = {");
+  add(main, 0, comp.uppercase+".propTypes = {");
   add(main, 0, "// name: PropTypes.string.isRequired");
   add(main, 0, "};");
   add(main, 0, "");
-  add(main, 0, component.nameUppercase+".defaultProps = {");
+  add(main, 0, comp.uppercase+".defaultProps = {");
   add(main, 1,  "name: PropTypes.string.isRequired");
   add(main, 0,  "};");
   add(main, 0, "");
-  add(main, 0, "export default "+component.nameUppercase+"");
+  add(main, 0, "export default "+comp.uppercase+"");
 
   main.on('finish', () => {
     console.log('component created');
@@ -108,11 +113,11 @@ inquirer.prompt([{
   main.end();
 
   // optional external stylesheet (css/scss)
-  if (component.styleSheet !== 'none') {
+  if (comp.styleSheet !== 'none') {
     const color = getRandomColor();
-    const fileType = (component.styleSheet == 'css') ? '.css' : '.scss';
-    const style = fs.createWriteStream('output/'+ component.nameLowercase + fileType);
-    add(style, 0, "." + component.nameLowercase + " {");
+    const fileType = (comp.styleSheet == 'css') ? '.css' : '.scss';
+    const style = fs.createWriteStream(location + comp.lowercase + fileType);
+    add(style, 0, "." + comp.lowercase + " {");
     add(style, 1, "background-color: " + color.primary + ";");
     add(style, 1, "color: " + color.secondary + ";");
     add(style, 1, "width: 150px;");
@@ -123,18 +128,6 @@ inquirer.prompt([{
   };
 
 });
-
-
-// imports = (component) => {
-//   // let output = \n";
-//   // output+="import PropTypes from 'prop-types';\n"
-//   // External Stylesheet
-//   component.styleSheet == 'css' || component.styleSheet == 'sass' ?
-//     output+="import './" + component.nameUppercase + "." + component.styleSheet + "';\n":
-//     null;
-//     output+="\n";
-//   return output;
-// }
 
 
 props = (name) => {
