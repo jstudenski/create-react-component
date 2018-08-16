@@ -2,8 +2,8 @@ var writeFile = require('write');
 var inquirer = require('inquirer');
 const fs = require('fs');
 
-let sass = fs.readFileSync('template/template.scss', 'utf8');
-let main = fs.readFileSync('template/Template.js', 'utf8');
+// let sass = fs.readFileSync('template/template.scss', 'utf8');
+// let main = fs.readFileSync('template/Template.js', 'utf8');
 
 inquirer.prompt([{
     type: "text",
@@ -48,12 +48,12 @@ inquirer.prompt([{
   // folder location
   const location = 'output/'+comp.uppercase+'/';
   // create the folder if it doesnt exist already
+  // TODO: add error message "would you like to replace..?"
   if (!fs.existsSync(location)){
     fs.mkdirSync(location);
   };
 
   // Main File
-
   let main = fs.createWriteStream(location+comp.uppercase+'.js');
 
   // imports
@@ -102,8 +102,8 @@ inquirer.prompt([{
   add(main, 0, "};");
   add(main, 0, "");
   add(main, 0, comp.uppercase+".defaultProps = {");
-  add(main, 1,  "name: PropTypes.string.isRequired");
-  add(main, 0,  "};");
+  add(main, 1, "name: PropTypes.string.isRequired");
+  add(main, 0, "};");
   add(main, 0, "");
   add(main, 0, "export default "+comp.uppercase+"");
 
@@ -129,11 +129,6 @@ inquirer.prompt([{
 
 });
 
-
-props = (name) => {
-  return getRandomColor();
-}
-
 getRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let colors = { primary:'#', secondary:'#'};
@@ -144,7 +139,6 @@ getRandomColor = () => {
   }
   return colors;
 }
-
 
 add = (stream, tabs, str) => {
   tabs = '  '.repeat(tabs)
