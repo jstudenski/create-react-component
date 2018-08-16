@@ -83,7 +83,9 @@ inquirer.prompt([{
   component.styleSheet !== 'none' ?
     add(main, 3, "<div className='"+ component.nameLowercase +"'>") :
     add(main, 3, "<div>");
-  add(main, 4, "<h1>Hello, {this.state.counter}</h1>");
+  component.state == 'yes' ?
+    add(main, 4, "<h1 onClick={this.handleClick}>Hello, {this.state.counter}</h1>") :
+    add(main, 4, "<h1>Hello, World</h1>");
   add(main, 3, "</div>");
   add(main, 2, ")");
   add(main, 1, "}");
@@ -114,7 +116,6 @@ inquirer.prompt([{
     add(style, 1, "background-color: " + color.primary + ";");
     add(style, 1, "color: " + color.secondary + ";");
     add(style, 1, "width: 150px;");
-    add(style, 1, "height: 50px;");
     add(style, 1, "border-radius: 5px;");
     add(style, 0, "}");
     style.on('finish', () => { console.log('sylesheet created') });
