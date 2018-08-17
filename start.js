@@ -57,7 +57,16 @@ inquirer.prompt([{
   };
 
   // TODO: index.js
-
+  let index = fs.createWriteStream(location+'index.js');
+  add(index, 0, "import "+comp.uppercase+" from './"+comp.uppercase+"';");
+  add(index, 0, "");
+  add(index, 0, "export default "+comp.uppercase+";");
+  add(index, 0, "");
+  index.on('finish', () => {
+    console.log('index.js added');
+  });
+  index.end();
+  // end index.js
 
   // Main File
   let main = fs.createWriteStream(location+comp.uppercase+'.js');
@@ -69,16 +78,6 @@ inquirer.prompt([{
     add(main, 0,  "import './" + comp.lowercase + ".css'") :
     null;
   add(main, 0,  "");
-    // proptypes
-    add(main, 0, comp.uppercase+".propTypes = {");
-    add(main, 1, "// title: PropTypes.string.isRequired,");
-    add(main, 0, "};");
-    add(main, 0, "");
-    add(main, 0, comp.uppercase+".defaultProps = {");
-    add(main, 1, "// title: 'Hello World',");
-    add(main, 0, "};");
-    add(main, 0, "");
-
 
   add(main, 0,  "class "+comp.uppercase+" extends React.Component {");
   // component has state
@@ -105,14 +104,23 @@ inquirer.prompt([{
     add(main, 3, "<div className='"+ comp.lowercase +"'>") :
     add(main, 3, "<div>");
   comp.state == 'yes' ?
-    add(main, 4, "<h1 onClick={this.handleClick}>Hello, {this.state.counter}</h1>") :
+    add(main, 4, "<h1 onClick={this.handleClick}>Hello "+comp.uppercase+": {this.state.counter}</h1>") :
     add(main, 4, "<h1>Hello, World</h1>");
   add(main, 3, "</div>");
   add(main, 2, ")");
   add(main, 1, "}");
   add(main, 0, "}");
   add(main, 0,  "");
-
+  // proptypes
+  add(main, 0, comp.uppercase+".propTypes = {");
+  add(main, 1, "// title: PropTypes.string.isRequired,");
+  add(main, 0, "};");
+  add(main, 0, "");
+  add(main, 0, comp.uppercase+".defaultProps = {");
+  add(main, 1, "// title: 'Hello World',");
+  add(main, 0, "};");
+  add(main, 0, "");
+  // export
   add(main, 0, "export default "+comp.uppercase+"");
   main.on('finish', () => {
     console.log('component created');
