@@ -69,6 +69,17 @@ inquirer.prompt([{
     add(main, 0,  "import './" + comp.lowercase + ".css'") :
     null;
   add(main, 0,  "");
+    // proptypes
+    add(main, 0, comp.uppercase+".propTypes = {");
+    add(main, 1, "// title: PropTypes.string.isRequired,");
+    add(main, 0, "};");
+    add(main, 0, "");
+    add(main, 0, comp.uppercase+".defaultProps = {");
+    add(main, 1, "// title: 'Hello World',");
+    add(main, 0, "};");
+    add(main, 0, "");
+
+
   add(main, 0,  "class "+comp.uppercase+" extends React.Component {");
   // component has state
   comp.state == 'yes' ?
@@ -101,17 +112,8 @@ inquirer.prompt([{
   add(main, 1, "}");
   add(main, 0, "}");
   add(main, 0,  "");
-  // proptypes
-  add(main, 0, comp.uppercase+".propTypes = {");
-  add(main, 0, "// name: PropTypes.string.isRequired");
-  add(main, 0, "};");
-  add(main, 0, "");
-  add(main, 0, comp.uppercase+".defaultProps = {");
-  add(main, 1, "name: PropTypes.string.isRequired");
-  add(main, 0, "};");
-  add(main, 0, "");
-  add(main, 0, "export default "+comp.uppercase+"");
 
+  add(main, 0, "export default "+comp.uppercase+"");
   main.on('finish', () => {
     console.log('component created');
   });
