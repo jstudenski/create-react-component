@@ -10,6 +10,13 @@ inquirer.prompt([{
     type: "text",
     message: "Component Name?",
     name: "name",
+    validate: function (value) {
+      if (value.length == 0) {
+        console.log('Please enter a value.');
+      } else {
+        return true;
+      }
+  },
   },
   {
     type: 'list',
