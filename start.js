@@ -76,13 +76,9 @@ inquirer.prompt([{
   genFolder('output/src/containers/Home/');
   genFolder('output/src/containers/About/');
 
-  // folder location
+  // component folder location
   const location = 'output/src/containers/'+comp.uppercase+'/';
-  // create the folder if it doesnt exist already
-  // TODO: add error message "would you like to replace..?"
-  if (!fs.existsSync(location)){
-    fs.mkdirSync(location);
-  };
+  genFolder(location);
 
   // TODO: index.js
   let index = fs.createWriteStream(location+'index.js');
