@@ -35,6 +35,21 @@ inquirer.prompt([{
     message: "Has state?",
     name: "state",
     choices: ['yes', 'no',]
+  },
+  {
+    type: 'checkbox',
+    message: "lifecycle methods",
+    name: "lifecycle",
+    choices: [
+      'getChildContext',
+      'componentWillMount',
+      'componentDidMount',
+      'componentWillReceiveProps',
+      'shouldComponentUpdate',
+      'componentWillUpdate',
+      'componentDidUpdate',
+      'componentWillUnmount',
+    ]
   }
 ]).then(function (res) {
 // Error Handling:
@@ -55,8 +70,14 @@ inquirer.prompt([{
     state: res.state,
   }
 
+  // generate folders
+  genFolder('output/src/');
+  genFolder('output/src/containers/');
+  genFolder('output/src/containers/Home/');
+  genFolder('output/src/containers/About/');
+
   // folder location
-  const location = 'output/'+comp.uppercase+'/';
+  const location = 'output/src/containers/'+comp.uppercase+'/';
   // create the folder if it doesnt exist already
   // TODO: add error message "would you like to replace..?"
   if (!fs.existsSync(location)){
@@ -151,6 +172,14 @@ inquirer.prompt([{
 
 });
 
+// generate a new folder (if it doesnt already exist)
+genFolder = (path) => {
+  if (!fs.existsSync(path)){
+    fs.mkdirSync(path);
+  };
+}
+
+// returns an object 'colors' containing a primary and secondary hex color code
 getRandomColor = () => {
   const letters = '0123456789ABCDEF';
   let colors = { primary:'#', secondary:'#'};
@@ -162,6 +191,7 @@ getRandomColor = () => {
   return colors;
 }
 
+// write a new line to a file, add correct number of tabs
 add = (stream, tabs, str) => {
   tabs = '  '.repeat(tabs)
   stream.write(tabs + str + "\n");
