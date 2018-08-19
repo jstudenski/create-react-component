@@ -10,3 +10,4 @@ node start
 * add ability to create and nest multiple components
 * state vs stateless option
 * generate supporting files (index.js, component.css)
+* ability to add multiple components
